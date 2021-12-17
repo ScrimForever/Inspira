@@ -1,6 +1,6 @@
-import datetime
 import uuid
-
+import datetime
+import platform
 from pynput import mouse
 import pyautogui
 import os
@@ -19,15 +19,17 @@ def on_click(x, y, button, pressed):
         (x, y)))
     if not pressed:
         screenshot = pyautogui.screenshot()
-        if os.name == 'nt':
-            file = 'C:\\temp\\shot_{datetime.datetime.now().date()}.jpg'
-            name = uuid.uuid4()
-            screenshot.save(file)
-            file = {'file': open(file, 'rb')}
-            httpx.post(f'http://127.0.0.1:9999/screen/{name}/', files=file)
-        else:
-            pass
+        name = uuid.uuid4()
 
+        if os.name == 'nt':
+            file = f'C:\\temp\\shot_{datetime.datetime.now().date()}.jpg'
+        else:
+            file = f'/tmp/shot_{datetime.datetime.now().date()}.jpg'
+        screenshot.save(file)
+        file = {'file': open(file, 'rb')}
+        host_id = platform.node()
+        response = httpx.post(f'http://127.0.0.1:9999/screen/{name}/{host_id}', files=file)
+        print(response.status_code)
 
 '''
 def on_scroll(x, y, dx, dy):
