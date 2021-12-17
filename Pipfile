@@ -11,6 +11,8 @@ pynput = "*"
 python-multipart = "*"
 pyautogui = "*"
 opencv-python = "*"
+starlette = "*"
+pydantic = "*"
 
 [dev-packages]
 
