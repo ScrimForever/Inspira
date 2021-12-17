@@ -10,6 +10,7 @@ sqlalchemy = "*"
 pynput = "*"
 python-multipart = "*"
 pyautogui = "*"
+opencv-python = "*"
 
 [dev-packages]
 
